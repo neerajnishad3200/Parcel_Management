@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Parcel Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="fas fa-shipping-fast me-2"></i>Parcel Management System
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Customer Registration</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="error-message" class="alert alert-danger d-none"></div>
+                            <div id="success-message" class="alert alert-success d-none"></div>
+                            
+                            <div id="registration-form-div">
+                                <form id="registration-form">
+                                    <h5 class="mb-3">1. Personal Information</h5>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="customerName" class="form-label">Customer Name</label>
+                                            <input type="text" class="form-control" id="customerName" name="customerName" maxlength="50" required>
+                                            <div class="form-text">Maximum 50 characters</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <label for="countryCode" class="form-label">Country Code</label>
+                                            <select class="form-select" id="countryCode" name="countryCode" required>
+                                                <option value="+1">+1 (USA/Canada)</option>
+                                                <option value="+44">+44 (UK)</option>
+                                                <option value="+91" selected>+91 (India)</option>
+                                                <option value="+61">+61 (Australia)</option>
+                                                <option value="+86">+86 (China)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <label for="mobile" class="form-label">Mobile Number</label>
+                                            <input type="text" class="form-control" id="mobile" name="mobile" pattern="[0-9]{10}" required>
+                                            <div class="form-text">10 digit mobile number</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Address</label>
+                                        <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                                        <div class="form-text">Complete mailing address including ZIP code and parcel code</div>
+                                    </div>
+                                    
+                                    <h5 class="mb-3 mt-4">2. Username and Password</h5>
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
+                                            <label for="userId" class="form-label">User ID</label>
+                                            <input type="text" class="form-control" id="userId" name="userId" minlength="5" maxlength="20" required>
+                                            <div class="form-text">Between 5 and 20 characters</div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="password" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="password" name="password" maxlength="30" required>
+                                            <div class="form-text">Maximum 30 characters, minimum one uppercase, lowercase, and special character</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" maxlength="30" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <h5 class="mb-3 mt-4">3. Preferences</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label">Notification Preferences</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="emailNotification" name="emailNotification" checked>
+                                            <label class="form-check-label" for="emailNotification">Email Notifications</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="smsNotification" name="smsNotification" checked>
+                                            <label class="form-check-label" for="smsNotification">SMS Notifications</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                        <button type="reset" class="btn btn-secondary me-md-2">Reset</button>
+                                        <button type="submit" class="btn btn-primary">Register</button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <div id="registration-acknowledgment" class="d-none">
+                                <div class="alert alert-success">
+                                    <h5><i class="fas fa-check-circle me-2"></i>Consumer Registration successful.</h5>
+                                </div>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Registration Details</h5>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>Username:</th>
+                                                <td id="ack-username"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Customer Name:</th>
+                                                <td id="ack-name"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email:</th>
+                                                <td id="ack-email"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <a href="index.html" class="btn btn-primary">Proceed to Login</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white text-center py-3 mt-5">
+            <div class="container">
+                <p class="mb-0">&copy; 2023 Parcel Management System. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>

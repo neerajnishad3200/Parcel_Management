@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pickup Scheduling - Parcel Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="officer-dashboard.html">
+                    <i class="fas fa-shipping-fast me-2"></i>Parcel Management System
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="officer-dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="officer-tracking.html">Tracking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="delivery-status.html">Delivery Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="pickup-scheduling.html">Pickup Scheduling</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="officer-booking-history.html">Previous Booking</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <span class="text-white me-3">Welcome, <span id="username">Officer</span></span>
+                        <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card shadow mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Search Booking</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="search-form">
+                                <div class="mb-3">
+                                    <label for="bookingId" class="form-label">Booking ID</label>
+                                    <input type="text" class="form-control" id="bookingId" name="bookingId" placeholder="Enter Booking ID" required>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="button" class="btn btn-primary" onclick="searchBooking()">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Pending Pickups</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action" onclick="loadBooking('BK123456789012')">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">BK123456789012</h6>
+                                        <small>15-06-2023</small>
+                                    </div>
+                                    <p class="mb-1">John Doe</p>
+                                    <small>Bangalore, Karnataka</small>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action" onclick="loadBooking('BK987654321098')">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">BK987654321098</h6>
+                                        <small>10-06-2023</small>
+                                    </div>
+                                    <p class="mb-1">Robert Johnson</p>
+                                    <small>Delhi, Delhi</small>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action" onclick="loadBooking('BK456789012345')">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">BK456789012345</h6>
+                                        <small>05-06-2023</small>
+                                    </div>
+                                    <p class="mb-1">Sarah Williams</p>
+                                    <small>Chennai, Tamil Nadu</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-8">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Schedule Pickup</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="no-booking-selected" class="text-center py-5">
+                                <i class="fas fa-calendar-alt fa-4x text-muted mb-3"></i>
+                                <h5>No booking selected</h5>
+                                <p class="text-muted">Search for a booking or select from pending pickups</p>
+                            </div>
+                            
+                            <div id="booking-details" class="d-none">
+                                <div class="alert alert-info mb-4">
+                                    <h5 class="mb-0">Booking Information: <span id="booking-id">BK123456789012</span></h5>
+                                </div>
+                                
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <h6>Sender Information</h6>
+                                        <p><strong>Name:</strong> <span id="sender-name">John Doe</span></p>
+                                        <p><strong>Address:</strong> <span id="sender-address">123 Main Street, Bangalore</span></p>
+                                        <p><strong>Contact:</strong> <span id="sender-contact">+91 9876543210</span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Receiver Information</h6>
+                                        <p><strong>Name:</strong> <span id="receiver-name">Jane Smith</span></p>
+                                        <p><strong>Address:</strong> <span id="receiver-address">456 Park Avenue, Mumbai</span></p>
+                                        <p><strong>Contact:</strong> <span id="receiver-contact">+91 9876543211</span></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <h6>Parcel Details</h6>
+                                        <p><strong>Weight:</strong> <span id="parcel-weight">2500g</span></p>
+                                        <p><strong>Contents:</strong> <span id="parcel-contents">Books and Documents</span></p>
+                                        <p><strong>Service Type:</strong> <span id="service-type">Express Delivery</span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Booking Details</h6>
+                                        <p><strong>Booking Date:</strong> <span id="booking-date">15-06-2023</span></p>
+                                        <p><strong>Customer Preferred Pickup:</strong> <span id="preferred-pickup">16-06-2023, Morning</span></p>
+                                    </div>
+                                </div>
+                                
+                                <form id="schedule-pickup-form">
+                                    <h6>Schedule Pickup</h6>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="pickupDate" class="form-label">Pickup Date</label>
+                                            <input type="date" class="form-control" id="pickupDate" name="pickupDate" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="pickupTime" class="form-label">Pickup Time</label>
+                                            <select class="form-select" id="pickupTime" name="pickupTime" required>
+                                                <option value="">Select Time</option>
+                                                <option value="morning">Morning (9:00 AM - 12:00 PM)</option>
+                                                <option value="afternoon">Afternoon (12:00 PM - 3:00 PM)</option>
+                                                <option value="evening">Evening (3:00 PM - 6:00 PM)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="pickupNotes" class="form-label">Notes (Optional)</label>
+                                        <textarea class="form-control" id="pickupNotes" name="pickupNotes" rows="3"></textarea>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="button" class="btn btn-primary" onclick="schedulePickup()">Schedule Pickup</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white text-center py-3 mt-5">
+            <div class="container">
+                <p class="mb-0">&copy; 2023 Parcel Management System. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    <script>
+        // Set username (in a real app, this would come from a server/session)
+        document.getElementById('username').textContent = 'Officer123';
+        
+        // Search booking function
+        function searchBooking() {
+            const bookingId = document.getElementById('bookingId').value;
+            
+            if (!bookingId) {
+                alert('Please enter Booking ID');
+                return;
+            }
+            
+            // Display booking details
+            document.getElementById('no-booking-selected').classList.add('d-none');
+            document.getElementById('booking-details').classList.remove('d-none');
+            document.getElementById('booking-id').textContent = bookingId;
+        }
+        
+        // Load booking details
+        function loadBooking(bookingId) {
+            document.getElementById('no-booking-selected').classList.add('d-none');
+            document.getElementById('booking-details').classList.remove('d-none');
+            document.getElementById('booking-id').textContent = bookingId;
+        }
+        
+        // Schedule pickup function
+        function schedulePickup() {
+            const pickupDate = document.getElementById('pickupDate').value;
+            const pickupTime = document.getElementById('pickupTime').value;
+            
+            if (!pickupDate || !pickupTime) {
+                alert('Please select pickup date and time');
+                return;
+            }
+            
+            alert('Pickup scheduled successfully!');
+        }
+    </script>
+</body>
+</html>

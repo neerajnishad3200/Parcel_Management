@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Status - Parcel Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="officer-dashboard.html">
+                    <i class="fas fa-shipping-fast me-2"></i>Parcel Management System
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="officer-dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="officer-tracking.html">Tracking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="delivery-status.html">Delivery Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="pickup-scheduling.html">Pickup Scheduling</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="officer-booking-history.html">Previous Booking</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <span class="text-white me-3">Welcome, <span id="username">Officer</span></span>
+                        <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card shadow mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Search Parcel</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="search-form">
+                                <div class="mb-3">
+                                    <label for="bookingId" class="form-label">Booking ID</label>
+                                    <input type="text" class="form-control" id="bookingId" name="bookingId" placeholder="Enter Booking ID" required>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="button" class="btn btn-primary" onclick="searchParcel()">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Pending Deliveries</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action" onclick="loadParcel('BK987654321098')">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">BK987654321098</h6>
+                                        <small>10-06-2023</small>
+                                    </div>
+                                    <p class="mb-1">Robert Johnson</p>
+                                    <small class="text-warning">In Transit</small>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action" onclick="loadParcel('BK456789012345')">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">BK456789012345</h6>
+                                        <small>05-06-2023</small>
+                                    </div>
+                                    <p class="mb-1">Sarah Williams</p>
+                                    <small class="text-info">Picked up</small>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action" onclick="loadParcel('BK789012345678')">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">BK789012345678</h6>
+                                        <small>01-06-2023</small>
+                                    </div>
+                                    <p class="mb-1">Michael Brown</p>
+                                    <small class="text-info">Picked up</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-8">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Update Delivery Status</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="no-parcel-selected" class="text-center py-5">
+                                <i class="fas fa-truck fa-4x text-muted mb-3"></i>
+                                <h5>No parcel selected</h5>
+                                <p class="text-muted">Search for a parcel or select from pending deliveries</p>
+                            </div>
+                            
+                            <div id="parcel-details" class="d-none">
+                                <div class="alert alert-info mb-4">
+                                    <h5 class="mb-0">Parcel Information: <span id="parcel-id">BK987654321098</span></h5>
+                                </div>
+                                
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <h6>Sender Information</h6>
+                                        <p><strong>Name:</strong> <span id="sender-name">John Doe</span></p>
+                                        <p><strong>Address:</strong> <span id="sender-address">123 Main Street, Bangalore</span></p>
+                                        <p><strong>Contact:</strong> <span id="sender-contact">+91 9876543210</span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Receiver Information</h6>
+                                        <p><strong>Name:</strong> <span id="receiver-name">Robert Johnson</span></p>
+                                        <p><strong>Address:</strong> <span id="receiver-address">789 Main Road, Delhi</span></p>
+                                        <p><strong>Contact:</strong> <span id="receiver-contact">+91 9876543212</span></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <h6>Parcel Details</h6>
+                                        <p><strong>Weight:</strong> <span id="parcel-weight">3000g</span></p>
+                                        <p><strong>Contents:</strong> <span id="parcel-contents">Electronics</span></p>
+                                        <p><strong>Service Type:</strong> <span id="service-type">Priority Delivery</span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Booking Details</h6>
+                                        <p><strong>Booking Date:</strong> <span id="booking-date">10-06-2023</span></p>
+                                        <p><strong>Expected Delivery:</strong> <span id="expected-delivery">12-06-2023</span></p>
+                                        <p><strong>Current Status:</strong> <span id="current-status" class="badge bg-warning">In Transit</span></p>
+                                    </div>
+                                </div>
+                                
+                                <form id="update-status-form">
+                                    <div class="mb-3">
+                                        <label for="status" class="form-label">Update Status</label>
+                                        <select class="form-select" id="status" name="status" required>
+                                            <option value="">Select Status</option>
+                                            <option value="picked_up">Picked up</option>
+                                            <option value="in_transit">In Transit</option>
+                                            <option value="out_for_delivery">Out for Delivery</option>
+                                            <option value="delivered">Delivered</option>
+                                            <option value="returned">Returned</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="statusNotes" class="form-label">Notes (Optional)</label>
+                                        <textarea class="form-control" id="statusNotes" name="statusNotes" rows="3"></textarea>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="button" class="btn btn-primary" onclick="updateStatus()">Update Status</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white text-center py-3 mt-5">
+            <div class="container">
+                <p class="mb-0">&copy; 2023 Parcel Management System. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    <script>
+        // Set username (in a real app, this would come from a server/session)
+        document.getElementById('username').textContent = 'Officer123';
+        
+        // Search parcel function
+        function searchParcel() {
+            const bookingId = document.getElementById('bookingId').value;
+            
+            if (!bookingId) {
+                alert('Please enter Booking ID');
+                return;
+            }
+            
+            // Display parcel details
+            document.getElementById('no-parcel-selected').classList.add('d-none');
+            document.getElementById('parcel-details').classList.remove('d-none');
+            document.getElementById('parcel-id').textContent = bookingId;
+        }
+        
+        // Load parcel details
+        function loadParcel(bookingId) {
+            document.getElementById('no-parcel-selected').classList.add('d-none');
+            document.getElementById('parcel-details').classList.remove('d-none');
+            document.getElementById('parcel-id').textContent = bookingId;
+        }
+        
+        // Update status function
+        function updateStatus() {
+            const status = document.getElementById('status').value;
+            
+            if (!status) {
+                alert('Please select a status');
+                return;
+            }
+            
+            // Update current status display
+            const currentStatus = document.getElementById('current-status');
+            currentStatus.textContent = status.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+            
+            // Update badge color based on status
+            currentStatus.className = 'badge';
+            if (status === 'picked_up') {
+                currentStatus.classList.add('bg-info');
+            } else if (status === 'in_transit') {
+                currentStatus.classList.add('bg-warning');
+            } else if (status === 'out_for_delivery') {
+                currentStatus.classList.add('bg-primary');
+            } else if (status === 'delivered') {
+                currentStatus.classList.add('bg-success');
+            } else if (status === 'returned') {
+                currentStatus.classList.add('bg-danger');
+            }
+            
+            alert('Status updated successfully!');
+        }
+    </script>
+</body>
+</html>

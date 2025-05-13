@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Parcel Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="customer-dashboard.html">
+                    <i class="fas fa-shipping-fast me-2"></i>Parcel Management System
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="customer-dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="booking-service.html">Booking Service</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="tracking.html">Tracking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="booking-history.html">Previous Booking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="customer-support.html">Contact Support</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <span class="text-white me-3">Welcome, <span id="username">Customer</span></span>
+                        <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Payment</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="error-message" class="alert alert-danger d-none"></div>
+                            
+                            <div id="payment-summary">
+                                <h5 class="mb-3">Payment Summary</h5>
+                                <div class="mb-3">
+                                    <label for="billAmount" class="form-label">Bill Amount (₹)</label>
+                                    <input type="text" class="form-control" id="billAmount" name="billAmount" value="350.00" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="paymentMode" class="form-label">Mode of Payment</label>
+                                    <select class="form-select" id="paymentMode" name="paymentMode">
+                                        <option value="credit">Credit Card</option>
+                                        <option value="debit">Debit Card</option>
+                                    </select>
+                                </div>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                    <button type="button" class="btn btn-secondary me-md-2" onclick="window.location.href='booking-service.html'">Back to Booking</button>
+                                    <button type="button" class="btn btn-primary" onclick="showCardDetails()">Pay Now</button>
+                                </div>
+                            </div>
+                            
+                            <div id="card-details" class="d-none">
+                                <h5 class="mb-3">Credit Card Details</h5>
+                                <form id="payment-form" onsubmit="return processPayment()">
+                                    <div class="mb-3">
+                                        <label for="cardNo" class="form-label">Card Number</label>
+                                        <input type="text" class="form-control" id="cardNo" name="cardNo" placeholder="1234 5678 9012 3456" maxlength="16" required>
+                                        <div class="form-text">16 digits without spaces</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="cardHolder" class="form-label">Card Holder Name</label>
+                                        <input type="text" class="form-control" id="cardHolder" name="cardHolder" required>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="expiryDate" class="form-label">Expiry Date</label>
+                                            <input type="text" class="form-control" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" required>
+                                            <div class="form-text">Format: MM/YY</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="cvv" class="form-label">CVV</label>
+                                            <input type="password" class="form-control" id="cvv" name="cvv" maxlength="3" required>
+                                            <div class="form-text">3 digits on the back of your card</div>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                        <button type="button" class="btn btn-secondary me-md-2" onclick="backToPaymentSummary()">Back</button>
+                                        <button type="submit" class="btn btn-primary">Make Payment</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white text-center py-3 mt-5">
+            <div class="container">
+                <p class="mb-0">&copy; 2023 Parcel Management System. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    <script>
+        // Set username (in a real app, this would come from a server/session)
+        document.getElementById('username').textContent = 'Customer123';
+        
+        // Show card details section
+        function showCardDetails() {
+            document.getElementById('payment-summary').classList.add('d-none');
+            document.getElementById('card-details').classList.remove('d-none');
+        }
+        
+        // Back to payment summary
+        function backToPaymentSummary() {
+            document.getElementById('payment-summary').classList.remove('d-none');
+            document.getElementById('card-details').classList.add('d-none');
+        }
+    </script>
+</body>
+</html>

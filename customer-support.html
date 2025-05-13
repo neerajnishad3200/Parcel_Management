@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Support - Parcel Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="customer-dashboard.html">
+                    <i class="fas fa-shipping-fast me-2"></i>Parcel Management System
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="customer-dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="booking-service.html">Booking Service</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="tracking.html">Tracking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="booking-history.html">Previous Booking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="customer-support.html">Contact Support</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <span class="text-white me-3">Welcome, <span id="username">Customer</span></span>
+                        <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card shadow h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Contact Information</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <h5><i class="fas fa-phone-alt me-2 text-primary"></i>Contact Numbers</h5>
+                                <p class="ms-4 mb-2">Customer Support: +91 1800 123 4567</p>
+                                <p class="ms-4 mb-2">Complaints: +91 1800 987 6543</p>
+                                <p class="ms-4 mb-0">International: +91 9876543210</p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h5><i class="fas fa-envelope me-2 text-primary"></i>Email Addresses</h5>
+                                <p class="ms-4 mb-2">General Inquiries: info@parcelmanagementsystem.com</p>
+                                <p class="ms-4 mb-2">Customer Support: support@parcelmanagementsystem.com</p>
+                                <p class="ms-4 mb-0">Complaints: complaints@parcelmanagementsystem.com</p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h5><i class="fas fa-map-marker-alt me-2 text-primary"></i>Office Address</h5>
+                                <p class="ms-4 mb-0">
+                                    Parcel Management System<br>
+                                    123 Logistics Avenue<br>
+                                    Bangalore, Karnataka 560001<br>
+                                    India
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h5><i class="fas fa-clock me-2 text-primary"></i>Working Hours</h5>
+                                <p class="ms-4 mb-2">Monday to Friday: 9:00 AM - 6:00 PM</p>
+                                <p class="ms-4 mb-0">Saturday: 9:00 AM - 1:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mt-4 mt-md-0">
+                    <div class="card shadow h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Send a Message</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="contact-form">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" id="subject" name="subject" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">Send Message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Frequently Asked Questions</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion" id="faqAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            How can I track my parcel?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            You can track your parcel by going to the Tracking page and entering your 12-digit booking ID. The booking ID is provided to you after completing your booking and payment.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            What should I do if my parcel is delayed?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            If your parcel is delayed, you can contact our customer support team using the contact information provided on this page. Please have your booking ID ready for reference.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            How do I cancel or modify my booking?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            To cancel or modify your booking, please contact our customer support team as soon as possible. Modifications or cancellations may be subject to terms and conditions.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                            What are the payment methods available?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            We currently accept payments through credit cards and debit cards. We plan to add more payment options in the future.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white text-center py-3 mt-5">
+            <div class="container">
+                <p class="mb-0">&copy; 2023 Parcel Management System. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    <script>
+        // Set username (in a real app, this would come from a server/session)
+        document.getElementById('username').textContent = 'Customer123';
+        
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Your message has been sent. Our team will get back to you soon!');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

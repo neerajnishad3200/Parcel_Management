@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Officer Booking - Parcel Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="officer-dashboard.html">
+                    <i class="fas fa-shipping-fast me-2"></i>Parcel Management System
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="officer-dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="officer-tracking.html">Tracking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="delivery-status.html">Delivery Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="pickup-scheduling.html">Pickup Scheduling</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="officer-booking-history.html">Previous Booking</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <span class="text-white me-3">Welcome, <span id="username">Officer</span></span>
+                        <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Book a Service for Customer</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="booking-form" action="payment.html">
+                                <!-- Sender Information -->
+                                <h5 class="mb-3">1. Sender Information</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="senderName" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="senderName" name="senderName" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="senderMobile" class="form-label">Contact Number</label>
+                                        <input type="text" class="form-control" id="senderMobile" name="senderMobile" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="senderAddress" class="form-label">Address</label>
+                                    <textarea class="form-control" id="senderAddress" name="senderAddress" rows="2" required></textarea>
+                                </div>
+                                
+                                <!-- Receiver Information -->
+                                <h5 class="mb-3 mt-4">2. Receiver Information</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="receiverName" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="receiverName" name="receiverName" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="receiverMobile" class="form-label">Contact Number</label>
+                                        <input type="text" class="form-control" id="receiverMobile" name="receiverMobile" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-8">
+                                        <label for="receiverAddress" class="form-label">Address</label>
+                                        <textarea class="form-control" id="receiverAddress" name="receiverAddress" rows="2" required></textarea>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="receiverPinCode" class="form-label">Pin Code</label>
+                                        <input type="text" class="form-control" id="receiverPinCode" name="receiverPinCode" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- Parcel Details -->
+                                <h5 class="mb-3 mt-4">3. Parcel Details</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="parcelSize" class="form-label">Size</label>
+                                        <select class="form-select" id="parcelSize" name="parcelSize" required>
+                                            <option value="">Select Size</option>
+                                            <option value="small">Small (up to 5kg)</option>
+                                            <option value="medium">Medium (5-10kg)</option>
+                                            <option value="large">Large (10-20kg)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="parcelWeight" class="form-label">Weight (g)</label>
+                                        <input type="number" class="form-control" id="parcelWeight" name="parcelWeight" min="1" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="parcelContents" class="form-label">Contents Description</label>
+                                        <input type="text" class="form-control" id="parcelContents" name="parcelContents" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- Shipping Options -->
+                                <h5 class="mb-3 mt-4">4. Shipping Options</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="deliverySpeed" class="form-label">Delivery Speed</label>
+                                        <select class="form-select" id="deliverySpeed" name="deliverySpeed" required>
+                                            <option value="">Select Delivery Speed</option>
+                                            <option value="standard">Standard (3-5 days)</option>
+                                            <option value="express">Express (1-2 days)</option>
+                                            <option value="priority">Priority (2-3 days)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="packagingPreference" class="form-label">Packaging Preference</label>
+                                        <select class="form-select" id="packagingPreference" name="packagingPreference" required>
+                                            <option value="">Select Packaging</option>
+                                            <option value="standard">Standard Packaging</option>
+                                            <option value="custom">Custom Packaging</option>
+                                            <option value="eco">Eco-friendly Packaging</option>
+                                            <option value="fragile">Fragile Item Handling</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Date and Time Selection -->
+                                <h5 class="mb-3 mt-4">5. Date and Time Selection</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="pickupDate" class="form-label">Pickup Date</label>
+                                        <input type="date" class="form-control" id="pickupDate" name="pickupDate" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="pickupTime" class="form-label">Pickup Time</label>
+                                        <select class="form-select" id="pickupTime" name="pickupTime" required>
+                                            <option value="">Select Time</option>
+                                            <option value="morning">Morning (9:00 AM - 12:00 PM)</option>
+                                            <option value="afternoon">Afternoon (12:00 PM - 3:00 PM)</option>
+                                            <option value="evening">Evening (3:00 PM - 6:00 PM)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Service Cost and Payment -->
+                                <h5 class="mb-3 mt-4">6. Service Cost and Payment</h5>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="serviceCost" class="form-label">Service Cost (₹)</label>
+                                        <input type="text" class="form-control" id="serviceCost" name="serviceCost" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="paymentMethod" class="form-label">Payment Method</label>
+                                        <select class="form-select" id="paymentMethod" name="paymentMethod" required>
+                                            <option value="">Select Payment Method</option>
+                                            <option value="credit">Credit Card</option>
+                                            <option value="debit">Debit Card</option>
+                                            <option value="cash">Cash</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Additional Services -->
+                                <h5 class="mb-3 mt-4">7. Additional Services</h5>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="insurance" name="insurance">
+                                        <label class="form-check-label" for="insurance">Insurance (Additional ₹50)</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="tracking" name="tracking" checked>
+                                        <label class="form-check-label" for="tracking">Tracking Services (Free)</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                    <button type="button" class="btn btn-secondary me-md-2" onclick="window.location.href='officer-dashboard.html'">Cancel</button>
+                                    <button type="button" class="btn btn-primary" onclick="processBooking()">Book Service</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white text-center py-3 mt-5">
+            <div class="container">
+                <p class="mb-0">&copy; 2023 Parcel Management System. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    <script>
+        // Set username (in a real app, this would come from a server/session)
+        document.getElementById('username').textContent = 'Officer123';
+        
+        // Calculate service cost when inputs change
+        document.addEventListener('DOMContentLoaded', function() {
+            const parcelSize = document.getElementById('parcelSize');
+            const parcelWeight = document.getElementById('parcelWeight');
+            const deliverySpeed = document.getElementById('deliverySpeed');
+            const packagingPreference = document.getElementById('packagingPreference');
+            const serviceCost = document.getElementById('serviceCost');
+            
+            // Calculate service cost when inputs change
+            const calculateCost = function() {
+                let cost = 0;
+                
+                // Base cost by size
+                if (parcelSize.value === 'small') {
+                    cost += 100;
+                } else if (parcelSize.value === 'medium') {
+                    cost += 200;
+                } else if (parcelSize.value === 'large') {
+                    cost += 300;
+                }
+                
+                // Additional cost by weight
+                if (parcelWeight.value) {
+                    cost += parseInt(parcelWeight.value) * 2;
+                }
+                
+                // Additional cost by delivery speed
+                if (deliverySpeed.value === 'express') {
+                    cost += 150;
+                } else if (deliverySpeed.value === 'priority') {
+                    cost += 100;
+                }
+                
+                // Additional cost by packaging preference
+                if (packagingPreference.value === 'custom') {
+                    cost += 50;
+                } else if (packagingPreference.value === 'eco') {
+                    cost += 30;
+                } else if (packagingPreference.value === 'fragile') {
+                    cost += 80;
+                }
+                
+                serviceCost.value = cost.toFixed(2);
+            };
+            
+            // Add event listeners to form elements
+            if (parcelSize && parcelWeight && deliverySpeed && packagingPreference) {
+                parcelSize.addEventListener('change', calculateCost);
+                parcelWeight.addEventListener('input', calculateCost);
+                deliverySpeed.addEventListener('change', calculateCost);
+                packagingPreference.addEventListener('change', calculateCost);
+            }
+        });
+        
+        // Process booking function
+        function processBooking() {
+            // Validate form
+            const form = document.getElementById('booking-form');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            // Generate booking ID
+            const bookingId = generateBookingId();
+            
+            // Show success message
+            alert('Booking successful! Booking ID: ' + bookingId);
+            
+            // Redirect to officer dashboard
+            window.location.href = 'officer-dashboard.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Officer Dashboard - Parcel Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="officer-dashboard.html">
+                    <i class="fas fa-shipping-fast me-2"></i>Parcel Management System
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="officer-dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="officer-tracking.html">Tracking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="delivery-status.html">Delivery Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="pickup-scheduling.html">Pickup Scheduling</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="officer-booking-history.html">Previous Booking</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <span class="text-white me-3">Welcome, <span id="username">Officer</span></span>
+                        <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container my-5">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h4 class="card-title">Officer Dashboard</h4>
+                            <p class="card-text">Manage parcel deliveries, track packages, and update delivery statuses.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow dashboard-card h-100">
+                        <div class="card-body text-center">
+                            <div class="dashboard-icon text-primary">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <h5 class="card-title">Book a Service</h5>
+                            <p class="card-text">Create a new booking for customer parcel delivery.</p>
+                            <a href="officer-booking.html" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow dashboard-card h-100">
+                        <div class="card-body text-center">
+                            <div class="dashboard-icon text-primary">
+                                <i class="fas fa-search-location"></i>
+                            </div>
+                            <h5 class="card-title">Track Parcel</h5>
+                            <p class="card-text">Track the status of parcels using booking ID.</p>
+                            <a href="officer-tracking.html" class="btn btn-primary">Track Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow dashboard-card h-100">
+                        <div class="card-body text-center">
+                            <div class="dashboard-icon text-primary">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <h5 class="card-title">Update Delivery Status</h5>
+                            <p class="card-text">Update the delivery status of parcels.</p>
+                            <a href="delivery-status.html" class="btn btn-primary">Update Status</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow dashboard-card h-100">
+                        <div class="card-body text-center">
+                            <div class="dashboard-icon text-primary">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h5 class="card-title">Schedule Pickup</h5>
+                            <p class="card-text">Schedule pickup for parcels from senders.</p>
+                            <a href="pickup-scheduling.html" class="btn btn-primary">Schedule Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-8 mb-4">
+                    <div class="card shadow h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Recent Deliveries</h5>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Booking ID</th>
+                                            <th>Customer ID</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>BK123456789012</td>
+                                            <td>CUST001</td>
+                                            <td>2023-06-15</td>
+                                            <td><span class="badge bg-success">Delivered</span></td>
+                                            <td><a href="#" class="btn btn-sm btn-outline-primary">View</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>BK987654321098</td>
+                                            <td>CUST002</td>
+                                            <td>2023-06-10</td>
+                                            <td><span class="badge bg-warning">In Transit</span></td>
+                                            <td><a href="#" class="btn btn-sm btn-outline-primary">View</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>BK456789012345</td>
+                                            <td>CUST003</td>
+                                            <td>2023-06-05</td>
+                                            <td><span class="badge bg-info">Picked up</span></td>
+                                            <td><a href="#" class="btn btn-sm btn-outline-primary">View</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>BK789012345678</td>
+                                            <td>CUST004</td>
+                                            <td>2023-06-01</td>
+                                            <td><span class="badge bg-danger">Returned</span></td>
+                                            <td><a href="#" class="btn btn-sm btn-outline-primary">View</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-end">
+                                <a href="officer-booking-history.html" class="btn btn-sm btn-outline-primary">View All</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white text-center py-3 mt-5">
+            <div class="container">
+                <p class="mb-0">&copy; 2023 Parcel Management System. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    <script>
+        // Set username (in a real app, this would come from a server/session)
+        document.getElementById('username').textContent = 'Officer123';
+    </script>
+</body>
+</html>
